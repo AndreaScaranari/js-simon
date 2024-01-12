@@ -9,14 +9,21 @@ const num5 = document.querySelector(".num5");
 // * dichiarazione variabili
 const nums = [num1, num2, num3, num4, num5];
 const userNums = [];
-const timeoutTiming = 5000;
+const randomNumbers = [];
+const timeoutTiming = 3000;
+const correctNumbers = [];
+let message;
 
 // * dichiarazione funzioni
-// generare un numero casuale
+// generare un numero casuale unico
 const getRandomNumber = max => {
-    const randomNumber = Math.floor(Math.random() * 100) +1;
+    const randomNumber = Math.floor(Math.random() * max) +1;
+        if (!randomNumbers.includes(randomNumber)) {
+        randomNumbers.push(randomNumber);
+
+    console.log(randomNumber);
     return randomNumber
-}
+}}
 
 // nascondere i numeri
 const hideNumbers = () => {
@@ -32,10 +39,35 @@ const createPrompt = () => {
         userNums.push(userNum);
     }}}
 
+// comparare i numeri ricordati a quelli generati
+const compareNumbers = () => {
+    for (let i = 0; i < nums.length; i++) {
+        if (userNums.includes(parseInt(nums[i].innerText)))
+            correctNumbers.push(nums[i].innerText);}}
+
+// generare il messaggio con il quantitativo di numeri ricordati correttamente (if any)
+const createMessage = () => {
+    if (correctNumbers.length === 0) {
+        message = "Nessuno dei numeri inseriti era corretto!"
+    } else if (correctNumbers.length === 1) {
+        message = "Il numero corretto che ti sei ricordato è: "
+    } else {
+        message = "I numeri corretti che ti sei ricordato sono: "
+    }
+    message += correctNumbers;
+    console.log(message);
+    alert(message);
+}
+
 // * svolgimento
 // genero 5 numeri casuali
-for (let i = 0; i < nums.length; i++) {
-    nums[i].innerText = getRandomNumber(100);
+while (randomNumbers.length < nums.length) {
+getRandomNumber(6);
+}
+
+// assegno ai div html i valori generati casualmente 
+for (let i = 0; i < randomNumbers.length; i++) {
+    nums[i].innerText = randomNumbers[i];
 }
 
 // nascondo i numeri dopo 30 secondi
@@ -46,4 +78,11 @@ const numbersTimeOut = setTimeout(() => {
 // chiedo all'utente quali numeri si ricorda
 const promptTimeOut = setTimeout(() => {
     createPrompt();
+
+// verifico quali numeri si è ricordato correttamente
+    compareNumbers();
+    
+// invio il messaggio dell'esito
+    createMessage();
 }, timeoutTiming+500);
+
