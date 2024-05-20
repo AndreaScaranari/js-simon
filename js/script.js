@@ -10,10 +10,10 @@ const num5 = document.querySelector(".num5");
 const nums = [num1, num2, num3, num4, num5];
 const userNums = [];
 const randomNumbers = [];
-const timeoutTiming = 30000;
 const correctNumbers = [];
-let message;
+const timeoutTiming = 30000;
 timer.innerText = (timeoutTiming / 1000);
+let message;
 
 // * dichiarazione funzioni
 // generare un numero casuale unico
@@ -36,7 +36,7 @@ for (let i = 0; i < nums.length; i++) {
 const createPrompt = () => {
     while (userNums.length < nums.length) {
     const userNum = parseInt(prompt("Indica un numero che ricordi"));
-    if (userNum && !userNums.includes(userNum) && !isNaN(userNum) && userNum<=100) {
+    if (userNum && !userNums.includes(userNum) && !isNaN(userNum) && userNum<100) {
         userNums.push(userNum);
     }}}
 
@@ -63,7 +63,7 @@ const createMessage = () => {
 // * svolgimento
 // faccio partire il timer a schermo
 const timerStart = setInterval(() => {
-    timer.innerText -= 1;
+    --timer.innerText;
 // fermo il timer quando arrivo al tempo desiderato
     if (parseInt(timer.innerText)*1000 == 0) {
     clearInterval(timerStart);
